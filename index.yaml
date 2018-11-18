@@ -12,5 +12,36 @@
           - zsh
         state: present
       become: yes
+
     - name: Install nvm
+      command: command -v nvm
+      register: nvm
       command: curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.11/install.sh | /bin/bash
+      when: nvm.stdout is not defined
+
+    - name: Install oh-my-zsh
+      command: sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
+
+    - name: Install zsh syntax highlight
+      command: cd ~/.oh-my-zsh && git clone git://github.com/zsh-users/zsh-syntax-highlighting.git
+
+    - name: Install z
+      command: wget https://raw.githubusercontent.com/rupa/z/master/z.sh
+
+    - name: zshrc
+      copy:
+        src: ./templates/zshrc
+        dest: ~/.zshrc
+
+    - name: Vim monokai theme
+      command: mkdir -p ~/.vim/colors && cd ~/.vim/colors && wget https://raw.githubusercontent.com/sickill/vim-monokai/master/colors/monokai.vim
+
+    - name: vimrc
+      copy:
+        src: ./templates/vimrc
+        dest: ~/.vimrc
+
+    - name: tmux config
+      copy:
+        src: ./templates/tmux.conf
+        dest: ~/.tmux.conf
