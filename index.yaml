@@ -14,19 +14,20 @@
       become: yes
 
     - name: Install nvm
-      shell: curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.11/install.sh | sh
-      args:
-        creates: /home/{{ ansible_user_id }}/.nvm/nvm.sh
+      git:
+        repo: https://github.com/creationix/nvm.git
+        version: v0.33.11
+        dest: /home/{{ ansible_user_id }}/.nvm
 
     - name: Install oh-my-zsh
-      command: sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
-      args:
-        creates: /home/{{ ansible_user_id }}/.oh-my-zsh
+      git:
+        repo: https://github.com/robbyrussell/oh-my-zsh.git
+        dest: /home/{{ ansible_user_id }}/.oh-my-zsh
 
     - name: Install zsh syntax highlight
-      command: git clone git://github.com/zsh-users/zsh-syntax-highlighting.git
-      args:
-        chdir: /home/{{ ansible_user_id }}/.oh-my-zsh/zsh-syntax-highlighting
+      git:
+        repo: https://github.com/zsh-users/zsh-syntax-highlighting.git
+        dest: /home/{{ ansible_user_id }}/.oh-my-zsh/zsh-syntax-highlighting
 
     - name: Install z
       get_url:
@@ -42,7 +43,8 @@
       file:
         path: /home/{{ ansible_user_id }}/.vim/colors
         state: directory
-    - name: Download vim monokay
+
+    - name: Download vim monokai
       get_url:
         url: https://raw.githubusercontent.com/sickill/vim-monokai/master/colors/monokai.vim
         dest: /home/{{ ansible_user_id }}/.vim/colors
