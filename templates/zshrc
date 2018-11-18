@@ -5,7 +5,7 @@
 unsetopt BG_NICE
 
 # Path to your oh-my-zsh installation.
-  export ZSH=/home/daniel/.oh-my-zsh
+export ZSH=/home/{{ ansible_user_id }}/.oh-my-zsh
 
 # Set name of the theme to load. Optionally, if you set this to "random"
 # it'll load a random theme each time that oh-my-zsh is loaded.
@@ -99,6 +99,3 @@ export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
 source ~/.oh-my-zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
-
-alias cdwindev='cd /mnt/c/Users/Daniel/Documents/Development'
-alias cdgiffgaff='cd /mnt/c/Users/Daniel/giffgaff'
