@@ -12,6 +12,11 @@ export ZSH=/home/{{ ansible_user_id }}/.oh-my-zsh
 # See https://github.com/robbyrussell/oh-my-zsh/wiki/Themes
 ZSH_THEME="mh"
 
+# Tmux and Terminal colors
+export TERM=screen-256color
+[ -n "$TMUX" ] && export TERM=screen-256color
+alias tmux='TERM=screen-256color tmux -2'
+
 # Set list of themes to load
 # Setting this variable when ZSH_THEME=random
 # cause zsh load theme from this variable instead of
@@ -62,6 +67,20 @@ ZSH_THEME="mh"
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
 plugins=(git z npm)
+
+git_fuzzy_checkout() {
+  local branches branch
+  branches=$(git branch -a) &&
+  branch=$(echo "$branches" | fzf +s +m -e) &&
+  git checkout $(echo "$branch" | sed "s:.* remotes/origin/::" | sed "s:.* ::")
+}
+
+alias git-checkout-fuzzy="git_fuzzy_checkout"
+
+alias git-delete-merged-branches='git branch --merged >/tmp/merged-branches && vi /tmp/merged-branches && xargs git branch -D </tmp/merged-branches'
+alias git-delete-all-branches='git branch >/tmp/merged-branches && vi /tmp/merged-branches && xargs git branch -D </tmp/merged-branches'
+
+export EDITOR="vim"
 
 source $ZSH/oh-my-zsh.sh
 
