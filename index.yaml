@@ -17,7 +17,6 @@
           - libssl-dev
           - libreadline-dev
           - python-openssl
-          - python-pip
         state: present
       become: yes
 
@@ -36,11 +35,11 @@
     - name: Install pyenv
       command: /bin/bash /home/{{ ansible_user_id }}/.pyenv_install.sh
 
-    - name: Install pipenv
-      command: /usr/bin/pip install --user pipenv
-
     - name: Install python 3.7.3
       command: /home/{{ ansible_user_id }}/.pyenv/bin/pyenv install 3.7.3
+
+    # - name: Install pipenv
+    #   command: /home/{{ ansible_user_id }}/.pyenv/shims/pip install --user pipenv
 
     # END python requriements
 
