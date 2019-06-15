@@ -5,11 +5,19 @@
       apt:
         pkg:
           - curl
+          - wget
           - git
           - tmux
           - vim
-          - wget
           - zsh
+          # for building python
+          - build-essential
+          - zlib1g-dev
+          - libffi-dev
+          - libssl-dev
+          - libreadline-dev
+          - python-openssl
+          - python-pip
         state: present
       become: yes
 
@@ -18,6 +26,23 @@
         repo: https://github.com/creationix/nvm.git
         version: v0.33.11
         dest: /home/{{ ansible_user_id }}/.nvm
+
+    # python requriements
+    - name: Download pyenv installer
+      get_url:
+        url: https://pyenv.run
+        dest: /home/{{ ansible_user_id }}/.pyenv_install.sh
+
+    - name: Install pyenv
+      command: /bin/bash /home/{{ ansible_user_id }}/.pyenv_install.sh
+
+    - name: Install pipenv
+      command: /usr/bin/pip install --user pipenv
+
+    - name: Install python 3.7.3
+      command: /home/{{ ansible_user_id }}/.pyenv/bin/pyenv install 3.7.3
+
+    # END python requriements
 
     - name: Install oh-my-zsh
       git:
