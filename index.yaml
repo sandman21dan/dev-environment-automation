@@ -12,11 +12,13 @@
           - zsh
           # for building python
           - build-essential
-          - zlib1g-dev
           - libffi-dev
-          - libssl-dev
           - libreadline-dev
+          - libsqlite3-dev
+          - libssl-dev
           - python-openssl
+          - sqlite-devel
+          - zlib1g-dev
         state: present
       become: yes
 
