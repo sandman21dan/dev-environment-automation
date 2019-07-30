@@ -10,6 +10,9 @@
           - tmux
           - vim
           - zsh
+          # database drivers
+          - libpq-dev
+          - unixodbc-dev
           # for building python
           - build-essential
           - libffi-dev
@@ -18,6 +21,8 @@
           - libssl-dev
           - python-openssl
           - zlib1g-dev
+          # Redis cli
+          - redis-tools
         state: present
       become: yes
 
