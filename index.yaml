@@ -55,12 +55,27 @@
 
     - name: Install pyenv
       command: /bin/bash /home/{{ ansible_user_id }}/.pyenv_install.sh
+      args:
+        creates: /home/{{ ansible_user_id }}/.pyenv
 
     - name: Install python 3.7.4
       command: /home/{{ ansible_user_id }}/.pyenv/bin/pyenv install 3.7.4
+      args:
+        creates: /home/{{ ansible_user_id }}/.pyenv/versions/3.7.4
 
-    # - name: Install pipenv
-    #   command: /home/{{ ansible_user_id }}/.pyenv/shims/pip install --user pipenv
+    - name: Install pipenv
+      command: /home/{{ ansible_user_id }}/.pyenv/shims/pip install --user pipenv
+      args:
+        creates: /home/{{ ansible_user_id }}/.pyenv/shims/pipenv
+      environment:
+        PYENV_VERSION: 3.7.4
+
+    - name: Install gimme-aws-creds
+      command: /home/{{ ansible_user_id }}/.pyenv/shims/pip install --user --upgrade gimme-aws-creds
+      args:
+        creates: /home/{{ ansible_user_id }}/.pyenv/shims/gimme-aws-creds
+      environment:
+        PYENV_VERSION: 3.7.4
 
     # END python requriements
 
