@@ -28,7 +28,9 @@
           - mssql-tools
           # for building python
           - build-essential
+          - libbz2-dev
           - libffi-dev
+          - liblzma-dev
           - libreadline-dev
           - libsqlite3-dev
           - libssl-dev
@@ -47,7 +49,7 @@
         version: v0.33.11
         dest: /home/{{ ansible_user_id }}/.nvm
 
-    # python requriements
+    # python requirements
     - name: Download pyenv installer
       get_url:
         url: https://pyenv.run
@@ -77,7 +79,7 @@
       environment:
         PYENV_VERSION: 3.7.4
 
-    # END python requriements
+    # END python requirements
 
     - name: Install oh-my-zsh
       git:
